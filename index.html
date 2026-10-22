@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru"><head><meta name="robots" content="noindex,nofollow"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.tile-art.supplied-art{left:16px;top:56px;width:98px;height:86px;overflow:visible}
+<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#ffffff"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.tile-art.supplied-art{left:16px;top:56px;width:98px;height:86px;overflow:visible}
 .tile-art.supplied-art.save{left:21px;top:52px;width:88px;height:78px}
 .tile-art.supplied-art.pop_services{left:30px;top:42px;width:92px;height:92px}
 .tile-art.supplied-art.pop_games{left:27px;top:45.5px;width:87.33px;height:87.33px}
@@ -933,6 +933,16 @@ input,textarea,select{font-size:16px!important}
 #app{display:flex;flex-direction:column}#view{flex:1;min-height:0}#study-keyboard{position:relative;z-index:30;background:#d5d8df;padding:8px 4px;flex:none;width:100%;box-sizing:border-box}#study-keyboard[hidden]{display:none}#study-keyboard>div{display:flex;justify-content:center;gap:4px;margin:0 0 7px}#study-keyboard button{font-family:inherit;font-size:18px;border:0;border-radius:5px;background:#fff;color:#242429;box-shadow:0 1px 1px #747880;min-width:0;flex:1;height:clamp(32px,5.3vh,44px);padding:0 2px;cursor:pointer}#study-keyboard button[data-vkey=' ']{flex:4;font-size:15px}#study-keyboard button[data-vkey=done]{flex:2;font-size:15px;background:#303037;color:white}#study-keyboard button:active{background:#b8bdc8}.study-comment-sheet{bottom:0}#app:has(#study-keyboard:not([hidden])) .ovl{bottom:var(--study-keyboard-height,230px)}
 /* Mobile payment contacts — Figma 464:51957. */
 .study-contact-nav{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;height:48px;flex:none}.study-contact-nav button{display:grid;place-items:center;width:44px;height:44px;border:0;background:none;color:#242429}.study-contact-nav strong{text-align:center;font-size:17px;line-height:20px;font-weight:550;white-space:nowrap}.study-mobilecontacts .study-contact-search{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:8px 16px 12px;padding:8px 15px;height:52px;border:1px solid #e0e0eb;border-radius:20px;background:#f6f6f9;box-sizing:border-box}.study-contact-search:focus-within{border-color:#242429}.study-contact-search>span{font-size:13px;line-height:17px;color:#808093}.study-mobilecontacts .study-contact-search input{font-family:inherit;font-size:17px!important;line-height:20px;height:20px;caret-color:#038f5d;padding:0}.study-mobilecontacts #mobile-contact-list{overflow-x:hidden}.study-contact-recents{display:flex;gap:8px;padding:8px 16px 0;overflow-x:auto;scrollbar-width:none}.study-contact-recents::-webkit-scrollbar{display:none}.study-contact-recents>button{flex:none;display:flex;align-items:center;gap:6px;height:56px;border:0;border-radius:16px;background:#f6f6f9;padding:8px;color:#242429;text-align:left;font-family:inherit}.study-contact-recents i{display:grid;place-items:center;flex:none;width:40px;height:40px;background:#ffdd2d;border-radius:12px}.study-contact-recents i img{display:block;max-width:none}.study-contact-recents b{display:block;font-size:15px;line-height:20px;font-weight:400}.study-contact-recents small{display:block;font-size:13px;line-height:17px;color:#808093;margin-top:2px}.study-contact-rows{display:flex;flex-direction:column;gap:4px;padding:12px 16px 16px}.study-mobilecontacts .study-contact-row{display:flex;align-items:center;gap:16px;padding:8px 0;min-height:62px;font-family:inherit;color:#242429;flex:none}.study-contact-row>img{width:40px;height:40px;object-fit:cover;border-radius:12px;flex:none}.study-contact-row>span{min-width:0}.study-contact-row b{display:block;font-size:17px;line-height:20px;font-weight:400;padding:2px 0}.study-contact-row small{display:block;font-size:15px;line-height:20px;color:#808093;margin-top:2px}@media(max-width:359px){.study-contact-nav strong{font-size:15px}}
+
+/* Плитка «Открыть карту с кешбэком»: текст сверху, как у соседних плиток, карта занимает остаток. */
+.study-wallets>.study-card-offer{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;text-align:left;padding:13px 10px 0 12px}
+.study-card-offer>span{position:relative;z-index:1;display:block;font-size:13px;line-height:16px;text-wrap:balance}
+.study-card-offer>div{position:relative;left:auto;right:auto;top:auto;flex:1 1 auto;min-height:28px;height:auto;margin:4px -10px 0 -12px;overflow:hidden}
+.study-card-offer>div>img{position:absolute;left:3%;top:0;width:100%;height:auto;aspect-ratio:1/1;transform:translateY(-18%);object-fit:contain}
+/* Статус-бар: зона safe-area красится в цвет верха текущего экрана (см. syncStatusBar). */
+html,body,.device,#app{background-color:var(--sb-color,#fff)}
+/* Нарисованный статус-бар «9:41» в промо-экранах не нужен: на телефоне есть настоящий. */
+.sb{display:none!important}
 </style>
 <div class="layout">
   <div class="stage">
@@ -1968,7 +1978,7 @@ S.cardpromo = () => `<div class="scr pscr" style="padding-top:0">${sbHTML().repl
   ${promoHead('hero_cardpromo','#F9D5F1',true)}
   <section class="psheet"><div class="seg3">${['Пластиковая','Виртуальная','Стикер'].map((t,i)=>`<button data-act="pickseg" aria-pressed="${i===0}">${t}</button>`).join('')}</div>
     <h3>Дебетовая карта или стикер</h3>
-    ${[['Кешбэк за покупки вне Wildberries','до 5%','кешбэком'],['Проценты на остаток на счёте свыше 10 000 ₽','12%','годовых'],['Бесплатное обслуживание и выпуск','0 ₽','в месяц'],['Наличные без комиссии в любых банкоматах РФ','0%','комиссия']].map(([t,v,u])=>`<div class="kvrow"><span>${t}</span><b>${v}<small>${u}</small></b></div>`).join('')}
+    ${[['Кешбэк за покупки вне Wildberries','до 5%','кешбэком'],['Проценты на остаток на счёте свыше 10 000 ₽','12%','годовых'],['Бесплатное обслуживание и выпуск','0 ₽','в месяц'],['Наличные без комиссии в любых банкоматах РФ','0%','комиссия']].map(([t,v,u])=>`<div class="kvrow"><span>${t}</span><b>${v}<small>${u}</small></b></div>`).join('')}
   </section></div><div class="foot white"><button class="pill full dark" data-act="go" data-go="${gohtml(['apply',{id:'card'}])}">Выбрать дизайн</button></div></div>`;
 S.cashpromo = () => `<div class="scr pscr" style="padding-top:0">${sbHTML(true).replace('class="sb light"','class="sb light" style="position:relative"')}<div class="scroll" style="margin-top:-50px">
   ${promoHead('hero_cash','#0B6B44')}
@@ -2978,10 +2988,51 @@ document.addEventListener('click',e=>{
  studyKeyboardEdit(input,key);
 });
 
+// Статус-бар в цвет фона: берём цвет верхней кромки текущего экрана и красим им
+// safe-area сверху, фон страницы (по нему iOS Safari тонирует статус-бар) и theme-color (Android, PWA).
+(function(){
+  const meta=document.querySelector('meta[name="theme-color"]');
+  const parse=c=>{const m=c&&c.match(/rgba?\(([^)]*)\)/);if(!m)return null;const p=m[1].split(/[\s,\/]+/).filter(Boolean).map(parseFloat);return [p[0],p[1],p[2],p.length>3?p[3]:1];};
+  const firstStop=img=>{if(!img||img==='none')return null;const m=img.match(/rgba?\([^)]*\)/);return m?parse(m[0]):null;};
+  let last='',queued=false;const cv=document.createElement('canvas');
+  function sample(){
+    queued=false;
+    const app=document.getElementById('app');if(!app)return;
+    const r=app.getBoundingClientRect(),pt=parseFloat(getComputedStyle(app).paddingTop)||0;
+    const layers=[];
+    const X=r.left+2,Y=r.top+pt+2;
+    let el=document.elementFromPoint(X,Y);
+    if(el&&el.tagName==='IMG'&&el.complete&&el.naturalWidth){
+      try{const ir=el.getBoundingClientRect();cv.width=cv.height=1;const cx=cv.getContext('2d',{willReadFrequently:true});
+        cx.clearRect(0,0,1,1);cx.drawImage(el,(X-ir.left)/ir.width*el.naturalWidth,(Y-ir.top)/ir.height*el.naturalHeight,1,1,0,0,1,1);
+        const d=cx.getImageData(0,0,1,1).data;if(d[3]>0)layers.push([d[0],d[1],d[2],d[3]/255]);}catch(_){}
+    }
+    for(;el&&el!==app&&el!==document.body;el=el.parentElement){
+      const cs=getComputedStyle(el);
+      const g=firstStop(cs.backgroundImage);if(g&&g[3]>0)layers.push(g);
+      const c=parse(cs.backgroundColor);if(c&&c[3]>0)layers.push(c);
+      if(layers.length&&layers[layers.length-1][3]>=.999)break;
+    }
+    let o=[255,255,255];
+    for(let i=layers.length-1;i>=0;i--){const [R,G,B,A]=layers[i];o=[o[0]*(1-A)+R*A,o[1]*(1-A)+G*A,o[2]*(1-A)+B*A];}
+    const hex='#'+o.map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');
+    if(hex===last)return;last=hex;
+    document.documentElement.style.setProperty('--sb-color',hex);
+    if(meta)meta.setAttribute('content',hex);
+  }
+  let late=0;const queue=()=>{if(!queued){queued=true;requestAnimationFrame(sample);}clearTimeout(late);late=setTimeout(()=>requestAnimationFrame(sample),420);};
+  window.syncStatusBar=queue;
+  document.addEventListener('DOMContentLoaded',()=>{const app=document.getElementById('app');if(app)new MutationObserver(queue).observe(app,{childList:true,subtree:true});queue();});
+  document.addEventListener('scroll',queue,true);
+  window.addEventListener('resize',queue);
+  document.addEventListener('transitionend',queue,true);
+  document.addEventListener('animationend',queue,true);
+})();
+
 function boot(){
   $('#app').innerHTML = `<div id="sbwrap"></div><div id="view"></div><div class="toast" id="toast" role="status" hidden></div>`;
   state.stack=[{s:'home',p:{}}];
-  render(); fitDevice(); window.addEventListener('resize',fitDevice); if(window.visualViewport){ visualViewport.addEventListener('resize',fitDevice); visualViewport.addEventListener('scroll',fitDevice); }
+  render(); fitDevice(); if(window.syncStatusBar){ new MutationObserver(window.syncStatusBar).observe($('#app'),{childList:true,subtree:true}); window.syncStatusBar(); } window.addEventListener('resize',fitDevice); if(window.visualViewport){ visualViewport.addEventListener('resize',fitDevice); visualViewport.addEventListener('scroll',fitDevice); }
 }
 if(typeof document!=='undefined' && document.getElementById('app')) boot();
 </script>
