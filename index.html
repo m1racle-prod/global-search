@@ -1278,7 +1278,6 @@ function buildIndex(){
   const D = (id,title,sub,kw,kind,go,cta) => ({id,g:'doc',title,sub,kw,kind,go,cta,personal:true});
   ENT.push(
     D('d_req_main','Реквизиты счёта','Основной счёт ··2314','реквизиты реквизит бик номер счета корр инн кпп для зарплаты получить','req',['requisites',{id:'main'}],'Скопировать'),
-    D('d_req_save','Реквизиты счёта','Накопительный счёт ··2317','реквизиты реквизит бик номер счета накопительный','req',['requisites',{id:'save'}],'Скопировать'),
     D('d_req_card','Реквизиты карты','Платёжный стикер ··1541','реквизиты номер карты стикер срок действия','req',['requisites',{id:'card'}],'Скопировать'),
     D('d_stmt','Выписка по счёту','Основной счёт · сентябрь 2026','выписка выписки движение по счету история','doc',['docview',{id:'stmt'}],'Скачать'),
     D('d_balance','Справка об остатке','Основной счёт · готова 2 октября','справка справки остаток остатке баланс','doc',['docview',{id:'balance'}],'Скачать'),
@@ -1290,7 +1289,7 @@ function buildIndex(){
   const P = (id,title,sub,kw,gl,go,cta,extra) => Object.assign({id,g:'prod',title,sub,kw,gl,go,cta},extra||{});
   ENT.push(
     P('pr_dep','Открыть вклад','Вклад до 14,7% годовых','вклад вклады депозит открыть процент проценты накопить сбережения','safe',['product',{id:'deposit'}],'Открыть'),
-    P('pr_save','Открыть счёт','Накопительный счёт под 13%','накопительный счет накопить копилка проценты открыть','safe',['product',{id:'save'}],'Открыть'),
+    P('pr_save','Открыть накопительный счёт','13% годовых на остаток','накопительный накопительного накопительному счет счёт накоп накопить накопления накопление мои накопления сбережения сберегательный копилка проценты на остаток открыть','safe',['product',{id:'save'}],'Открыть'),
     P('pr_card','Оформить карту','Дебетовая карта с кешбэком до 5%','карта карты дебетовая оформить заказать выпустить пластик кешбэк новая','card',['product',{id:'card'}],'Оформить'),
     P('pr_credit','Получить кредит','Кредит наличными до 5 млн ₽','кредит кредиты займ взять деньги наличные','credit',['product',{id:'credit'}],'Оформить'),
     P('pr_wbcash','Оформить WB Кэш','До 100 000 ₽','wb кэш кеш кешбэк баллы','wbcash',['product',{id:'wbcash'}],'Подключить'),
@@ -1308,7 +1307,6 @@ function buildIndex(){
     P('pr_open','Открыть счёт','+12% к сумме на счёте','открыть счет новый уровень кошелька повысить','coin',['pop',{k:'acc'}],'Открыть'),
     P('my_wallet','15 000 ₽','WB Кошелёк','кошелек баланс сколько денег остаток мой','coin',['account',{id:'wallet'}],null,{personal:true,val:true}),
     P('my_main','341 300 ₽','Основной счёт ··2314','основной счет баланс остаток мои счета','coin',['account',{id:'main'}],null,{personal:true,val:true}),
-    P('my_save','2 000 300 ₽','Накопительный счёт ··2317','накопительный счет мои накопления баланс','safe',['account',{id:'save'}],null,{personal:true,val:true}),
     P('my_sticker','13 739 ₽','Платёжный стикер ··1541','стикер карта моя карта карты баланс','card',['card',{}],null,{personal:true,val:true}),
     P('my_virt','5 200 ₽','Виртуальная карта ··1765','виртуальная карта моя карта карты баланс','card',['card',{}],null,{personal:true,val:true}),
     P('my_cash','340 баллов','Кешбэк за октябрь','кешбэк кэшбэк cashback баллы бонусы категории','wbcash',['section',{id:'cashback'}],null,{personal:true,val:true}),
@@ -1872,6 +1870,7 @@ function nav(go, replace){
   closeOvl();
   if(scr==='abroadsheet'){ return openAbroadSheet(p.c); }
   if(scr==='pay' && PROVIDERS[p.p] && SVC_PAY[p.p]) { p={p:p.p}; scr='svcpay'; }
+  if(scr==='pay' && PROVIDERS[p.p] && PROVIDERS[p.p].mobile && !p.keepOp) state.payOp = PROVIDERS[p.p].t;
   // Аноним / УПРИД: без идентификации недоступны только переводы (161-ФЗ); платить можно — платежи не перехватываем
   if(state.persona==='anon' && scr==='abroadform') { p={reason:'Переводы', next:[scr,p]}; scr='upgrade'; }
   if(scr==='cbcat'){ scr = state.cbChosen ? 'cbchosen' : 'cbcats'; }
@@ -2017,7 +2016,7 @@ S.savings = () => `<div class="scr gacc">${greenHead('Накопления и и
   <section class="card pad"><div class="sec-t">Вклады</div><div class="stiles"><button class="newtile" data-act="go" data-go="${gohtml(['product',{id:'dep'}])}">${ic('plus')}<span>Открыть новый вклад до 16,5%</span></button>
     ${[['Вклад','··7654','100 000 ₽','15% · до 13.04.2026'],['Вклад','··1111','50 000 ₽','15% · до 13.04.2026']].map(([t,n,v,d])=>`<div class="stile"><b>${t}</b><small>${n}</small><span class="v">${v}</span><small>${d}</small></div>`).join('')}</div></section>
   <section class="card pad"><div class="sec-t">Накопительные счета</div><div class="stiles"><button class="newtile" data-act="go" data-go="${gohtml(['product',{id:'save'}])}">${ic('plus')}<span>Открыть накопительный счёт</span></button>
-    <div class="stile" role="button" tabindex="0" data-act="go" data-go="${gohtml(['account',{id:'save'}])}"><b>Накопительный счёт</b><small>··2317</small><span class="v">51 500 ₽</span><small>13% годовых</small></div></div></section>
+    </div></section>
 </div></div>`;
 S.savingsnew = () => `<div class="scr gacc pink">${greenHead('Накопления','0 ₽','Общий баланс')}<div class="scroll gbody">
   <section class="card pad"><div class="sec-t">Открыть новое</div><div class="stiles">
@@ -2218,7 +2217,6 @@ S.pay = p => {
 const TOPUP_BANKS = [
   {id:'tbank',name:'Т-Банк',sub:'СБП',icon:'imgIconBankWhiteThemeTBank'},
   {id:'alfa',name:'Альфа-Банк',sub:'СБП',icon:'imgIconBankWhiteThemeAlfaBank'},
-  {id:'save',name:'Накопительный счёт ··7654',sub:'1 000 ₽',icon:'img24FillSafeFill'},
   {id:'other',name:'Другой',sub:'банк',icon:'imgGroup1028'}
 ];
 const topupBank = () => TOPUP_BANKS.find(b=>b.id===state.topupSource)||TOPUP_BANKS[0];
@@ -2822,7 +2820,7 @@ document.addEventListener('click', e=>{
     case 'cbpick': { const v=el.dataset.v; if(state.cbPick.has(v)) state.cbPick.delete(v); else if(state.cbPick.size<4) state.cbPick.add(v); else toast('Можно выбрать 4 категории'); return render(); }
     case 'cbsave': state.cbChosen=true; back(); return toast('Категории на ноябрь выбраны');
     case 'toggle': state.autoTop=!state.autoTop; el.setAttribute('aria-pressed',state.autoTop);  return;
-    case 'setop': state.payOp = el.dataset.op; return nav(['mobilecontacts',{p:el.dataset.k}],true);
+    case 'setop': state.payOp = el.dataset.op; if(el.dataset.pick){ return nav(['pay',{p:el.dataset.k,contactSelected:true}],true); } return back();
     case 'freeze': state.frozen=!state.frozen; toast(state.frozen?'Карта ··1541 заморожена':'Карта ··1541 разморожена'); return render();
     case 'showcard': state.showCard=!state.showCard; return render();
     case 'noop': return;
@@ -2955,7 +2953,6 @@ S.mobilecontacts=p=>`<div class="scr study-mobilecontacts"><nav class="study-con
 const studyOriginalNav=nav;
 nav=function(go,replace){
  let [s,p={}]=go;
- if(s==='pay'&&PROVIDERS[p.p]?.mobile&&!p.contactSelected)s='mobilecontacts';
  if(s==='mobilecontacts')state.payOp=PROVIDERS[p.p].t;
  studyOriginalNav([s,p],replace);
  if(s==='mobilecontacts'){const input=$('#mcq');if(input)input.focus({preventScroll:true});}
