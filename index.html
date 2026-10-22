@@ -943,6 +943,16 @@ input,textarea,select{font-size:16px!important}
 html,body,.device,#app{background-color:var(--sb-color,#fff)}
 /* Нарисованный статус-бар «9:41» в промо-экранах не нужен: на телефоне есть настоящий. */
 .sb{display:none!important}
+
+/* Экраны с картинкой-шапкой: без сдвига под нарисованный статус-бар. */
+.scr>.scroll[style*="margin-top:-50px"]{margin-top:0!important}
+/* WB Кэш, Кредиты, Накопления: шапка без пустой полосы сверху. */
+.ghead{padding-top:4px}
+/* «Назад» поверх картинки: всегда виден и не уезжает при прокрутке. */
+.stk-back{position:sticky;top:0;height:0;z-index:6}
+.stk-back>button{position:absolute;top:8px;left:12px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);color:#242429;box-shadow:0 2px 8px rgba(0,0,0,.14);display:grid;place-items:center;border:0;padding:0;margin:0;font-size:28px;line-height:1;cursor:pointer}
+.stk-back>button svg{width:24px;height:24px}
+.study-comment-sheet{position:absolute}.study-sheet-x{position:absolute;top:16px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:#f6f6f9;color:#242429;display:grid;place-items:center;cursor:pointer;padding:0}
 </style>
 <div class="layout">
   <div class="stage">
@@ -1973,7 +1983,7 @@ S.mainacc = () => `<div class="scr" style="background:#E7E6EF">${navHTML('Осн
 
 
 /* ===== Figma 27: куда ведут плитки «Популярного» ===== */
-const promoHead = (img,bg,dark) => `<div class="phero" style="background:${bg}"><img src="${IMG[img]}" alt=""><button class="bk3 ${dark?'':'w'}" data-act="back" aria-label="Назад">${ic('back')}</button></div>`;
+const promoHead = (img,bg,dark) => `<div class="stk-back"><button data-act="back" aria-label="Назад">${ic('back')}</button></div><div class="phero" style="background:${bg}"><img src="${IMG[img]}" alt=""></div>`;
 S.cardpromo = () => `<div class="scr pscr" style="padding-top:0">${sbHTML().replace('class="sb"','class="sb" style="position:relative"')}<div class="scroll" style="margin-top:-50px">
   ${promoHead('hero_cardpromo','#F9D5F1',true)}
   <section class="psheet"><div class="seg3">${['Пластиковая','Виртуальная','Стикер'].map((t,i)=>`<button data-act="pickseg" aria-pressed="${i===0}">${t}</button>`).join('')}</div>
@@ -2342,7 +2352,7 @@ S.order = p => S.docs(Object.assign({tab:'order'}, p));
 S.product = p => {
   const d = PRODUCTS[p.id]||PRODUCTS.card;
   return `<div class="scr" style="padding-top:0">${sbHTML(true).replace('class="sb light"','class="sb light" style="position:relative"')}<div class="scroll" style="margin-top:-50px">
-    <div class="hero" style="background:${d.bg};padding-top:58px"><button class="bk2" style="top:52px" data-act="back" aria-label="Назад">${ic('back')}</button><h2>${esc(d.t)}</h2><p>${esc(d.s)}</p><img src="${IMG[d.img]}" alt=""></div>
+    <div class="stk-back"><button data-act="back" aria-label="Назад">${ic('back')}</button></div><div class="hero" style="background:${d.bg};padding-top:60px"><h2>${esc(d.t)}</h2><p>${esc(d.s)}</p><img src="${IMG[d.img]}" alt=""></div>
     <ul class="bul">${d.pts.map(([im,t,s])=>`<li><img src="${IMG[im]}" alt=""><span><b>${esc(t)}</b><span>${esc(s)}</span></span></li>`).join('')}</ul>
     <div class="row" role="button" tabindex="0" data-act="go" data-go="${gohtml(['docview',{id:'tariff'}])}"><span class="it">${ic('doc')}</span><span class="mid"><span class="t">Условия и тарифы</span><span class="s">PDF</span></span><span class="end">${ic('chev','s20')}</span></div>
   </div><div class="foot white" style="box-shadow:0 -8px 20px -16px rgba(0,0,0,.3)"><button class="pill full dark" data-act="go" data-go="${gohtml(['apply',{id:p.id}])}">${esc(d.cta)}</button></div></div>`;
@@ -2905,14 +2915,14 @@ document.addEventListener('click',e=>{
  const b=e.target.closest('[data-act]');if(!b)return;
  if(b.dataset.act==='study-balance'){state.studyHideBalance=!state.studyHideBalance;keepScroll(render);}
  if(b.dataset.act==='study-comment'){
-  const el=document.createElement('div');el.className='ovl';el.id='ovl';
-  el.innerHTML=`<div class="study-comment-sheet"><h3>Комментарий к переводу</h3><input id="study-comment-input" maxlength="140" placeholder="Сообщение получателю" value="${esc(state.studyComment||'')}"><button class="pill full" data-act="study-save-comment">Готово</button></div>`;
+  const el=document.createElement('div');el.className='ovl';el.id='ovl';el.dataset.act='closeovl';
+  el.innerHTML=`<div class="study-comment-sheet" data-act="noop"><button class="study-sheet-x" data-act="closeovl" aria-label="Закрыть">${ic('x','s20')}</button><h3>Комментарий к переводу</h3><input id="study-comment-input" maxlength="140" placeholder="Сообщение получателю" value="${esc(state.studyComment||'')}"><button class="pill full" data-act="study-save-comment">Готово</button></div>`;
   $('#app').append(el);$('#study-comment-input').focus();
  }
  if(b.dataset.act==='study-save-comment'){state.studyComment=$('#study-comment-input').value.trim();render();}
 });
 
-S.upgrade=p=>`<div class="scr study-promo"><div class="scroll"><div class="study-promo-hero">${designImage('promo-imgTopBlock')}${designImage('promo-imgTopBlock1')}<button data-act="back" aria-label="Закрыть">×</button></div><section class="study-promo-card study-promo-title"><h1>WB Кошелёк лучше,<br>скидка — выше</h1><p>Откройте максимальную скидку кошелька</p></section><section class="study-promo-card"><h2>Что в итоге</h2>${[
+S.upgrade=p=>`<div class="scr study-promo"><div class="scroll"><div class="stk-back"><button data-act="back" aria-label="Закрыть">×</button></div><div class="study-promo-hero">${designImage('promo-imgTopBlock')}${designImage('promo-imgTopBlock1')}</div><section class="study-promo-card study-promo-title"><h1>WB Кошелёк лучше,<br>скидка — выше</h1><p>Откройте максимальную скидку кошелька</p></section><section class="study-promo-card"><h2>Что в итоге</h2>${[
 ['promo-img24FillSaleFill','Максимальная скидка до 7%','На покупки на Wildberries'],
 ['promo-img24FillWalletFill','Начисляем до 12% годовых','Ежедневно начисляем проценты на счёт'],
 ['promo-img24FillCashbackNewFill','До 5% кешбэка по карте','Платите картой WB Банка и получайте кешбэк ягодками'],
