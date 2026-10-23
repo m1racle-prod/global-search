@@ -1870,7 +1870,6 @@ function nav(go, replace){
   closeOvl();
   if(scr==='abroadsheet'){ return openAbroadSheet(p.c); }
   if(scr==='pay' && PROVIDERS[p.p] && SVC_PAY[p.p]) { p={p:p.p}; scr='svcpay'; }
-  if(scr==='pay' && PROVIDERS[p.p] && PROVIDERS[p.p].mobile && !p.keepOp) state.payOp = PROVIDERS[p.p].t;
   // Аноним / УПРИД: без идентификации недоступны только переводы (161-ФЗ); платить можно — платежи не перехватываем
   if(state.persona==='anon' && scr==='abroadform') { p={reason:'Переводы', next:[scr,p]}; scr='upgrade'; }
   if(scr==='cbcat'){ scr = state.cbChosen ? 'cbchosen' : 'cbcats'; }
@@ -2820,7 +2819,7 @@ document.addEventListener('click', e=>{
     case 'cbpick': { const v=el.dataset.v; if(state.cbPick.has(v)) state.cbPick.delete(v); else if(state.cbPick.size<4) state.cbPick.add(v); else toast('Можно выбрать 4 категории'); return render(); }
     case 'cbsave': state.cbChosen=true; back(); return toast('Категории на ноябрь выбраны');
     case 'toggle': state.autoTop=!state.autoTop; el.setAttribute('aria-pressed',state.autoTop);  return;
-    case 'setop': state.payOp = el.dataset.op; if(el.dataset.pick){ return nav(['pay',{p:el.dataset.k,contactSelected:true}],true); } return back();
+    case 'setop': state.payOp = el.dataset.op; return nav(['mobilecontacts',{p:el.dataset.k}],true);
     case 'freeze': state.frozen=!state.frozen; toast(state.frozen?'Карта ··1541 заморожена':'Карта ··1541 разморожена'); return render();
     case 'showcard': state.showCard=!state.showCard; return render();
     case 'noop': return;
@@ -2953,6 +2952,7 @@ S.mobilecontacts=p=>`<div class="scr study-mobilecontacts"><nav class="study-con
 const studyOriginalNav=nav;
 nav=function(go,replace){
  let [s,p={}]=go;
+ if(s==='pay'&&PROVIDERS[p.p]?.mobile&&!p.contactSelected)s='mobilecontacts';
  if(s==='mobilecontacts')state.payOp=PROVIDERS[p.p].t;
  studyOriginalNav([s,p],replace);
  if(s==='mobilecontacts'){const input=$('#mcq');if(input)input.focus({preventScroll:true});}
